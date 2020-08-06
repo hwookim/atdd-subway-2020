@@ -47,7 +47,7 @@ public class PathDocumentation extends Documentation {
         PathResponse pathResponse = new PathResponse(
                 Arrays.asList(
                         new StationResponse(1L, "교대역", LocalDateTime.now(), LocalDateTime.now()),
-                        new StationResponse(1L, "교대역", LocalDateTime.now(), LocalDateTime.now())
+                        new StationResponse(2L, "서초역", LocalDateTime.now(), LocalDateTime.now())
                 ), 10, 10, 1250);
         when(mapService.findPath(any(), any(), any())).thenReturn(pathResponse);
 
@@ -78,7 +78,7 @@ public class PathDocumentation extends Documentation {
         PathResponse pathResponse = new PathResponse(
                 Arrays.asList(
                         new StationResponse(1L, "교대역", LocalDateTime.now(), LocalDateTime.now()),
-                        new StationResponse(1L, "교대역", LocalDateTime.now(), LocalDateTime.now())
+                        new StationResponse(2L, "서초역", LocalDateTime.now(), LocalDateTime.now())
                 ), 10, 10, 1250);
         when(mapService.findPath(any(), any(), any(), any())).thenReturn(pathResponse);
 
