@@ -60,7 +60,7 @@ public class LoginMember implements UserDetails {
         if (age == 0 || age > 18) {
             return fare;
         }
-        if (age >= 13) {
+        if (age > 13) {
             return (fare - 350) * 80 / 100;
         }
         if (age >= 6) {
