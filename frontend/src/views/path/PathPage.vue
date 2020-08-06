@@ -17,6 +17,7 @@
                 item-color="amber darken-3"
                 outlined
                 dense
+                :rules="rules.path.source"
               ></v-select>
               <v-icon class="relative bottom-15">mdi-arrow-right-bold</v-icon>
               <v-select
@@ -28,10 +29,11 @@
                 item-color="amber darken-3"
                 outlined
                 dense
+                :rules="rules.path.target"
               ></v-select>
             </div>
             <div class="d-flex mb-4">
-              <v-btn @click="onSearchResult" color="amber" class="width-100" depressed>검색</v-btn>
+              <v-btn @click="onSearchResult(PATH_TYPE.DISTANCE)" color="amber" class="width-100" depressed>검색</v-btn>
             </div>
             <v-divider v-if="pathResult" />
             <div v-if="pathResult" class="d-flex justify-center mt-4">
@@ -218,11 +220,11 @@ export default {
   methods: {
     ...mapMutations([SHOW_SNACKBAR]),
     ...mapActions([SEARCH_PATH, FETCH_STATIONS]),
-    async onSearchResult() {
+    async onSearchResult(type) {
       const params = {
         source: this.path.source,
         target: this.path.target,
-        type: PATH_TYPE.DISTANCE,
+        type: type,
       };
       try {
         await this.$store.dispatch(SEARCH_PATH, params);
@@ -273,7 +275,7 @@ export default {
     },
     onChangePathType(type) {
       this.path.type = type
-      this.onSearchResult()
+      this.onSearchResult(type)
     }
   },
   data() {

@@ -11,7 +11,7 @@
     - [ ] path와 departureTime form의 validation을 구현
         - [ ] 빈 값 확인
         - path form
-            - [ ] source, target 유효값 검사
+            - [x] source, target 유효값 검사
         - departureTime form
             - [ ] dayTime: '오전' or '오후'인지 검사
             - [ ] hour: 숫자 타입, 1~12 사이의 정수인지 검사
