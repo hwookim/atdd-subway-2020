@@ -32,7 +32,7 @@ public class PathServiceTest {
         line1.addLineStation(new LineStation(1L, null, 0, 0));
         line1.addLineStation(new LineStation(2L, 1L, 2, 2));
 
-        Line line2 = TestObjectUtils.createLine(2L, "신분당선", "RED", 0);
+        Line line2 = TestObjectUtils.createLine(2L, "신분당선", "RED", 100);
         line2.addLineStation(new LineStation(2L, null, 0, 0));
         line2.addLineStation(new LineStation(3L, 2L, 2, 1));
 
@@ -68,5 +68,23 @@ public class PathServiceTest {
         assertThat(subwayPath.extractStationId().get(0)).isEqualTo(1L);
         assertThat(subwayPath.extractStationId().get(1)).isEqualTo(2L);
         assertThat(subwayPath.extractStationId().get(2)).isEqualTo(3L);
+    }
+
+    @Test
+    void calculateFare() {
+        // when
+        SubwayPath subwayPath = pathService.findPath(lines, 1L, 4L, PathType.DURATION);
+
+        // then
+        assertThat(subwayPath.calculateFare()).isEqualTo(1250);
+    }
+
+    @Test
+    void calculateFare_extraFare() {
+        // when
+        SubwayPath subwayPath = pathService.findPath(lines, 1L, 3L, PathType.DURATION);
+
+        // then
+        assertThat(subwayPath.calculateFare()).isEqualTo(1450);
     }
 }
