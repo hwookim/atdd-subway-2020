@@ -36,13 +36,32 @@ public class SubwayPath {
         return lineStationEdges.stream().mapToInt(it -> it.getLineStation().getDistance()).sum();
     }
 
-    //TODO: 거리 초과, 연령별 할인 정책
+    //TODO: 연령별 할인 정책
     public int calculateFare() {
         return DEFAULT_FARE
-                + lineStationEdges.stream()
+                + calculateLineExtraFare()
+                + calculateOverDistanceExtraFare();
+    }
+
+    private int calculateLineExtraFare() {
+        return lineStationEdges.stream()
                 .map(LineStationEdge::getLine)
                 .mapToInt(Line::getExtraFare)
                 .max()
                 .orElseThrow(RuntimeException::new);
+    }
+
+    private int calculateOverDistanceExtraFare() {
+        int extraFare = 0;
+        int distance = calculateDistance();
+
+        if (distance > 50) {
+            extraFare += Math.ceil((distance - 50) / 8.0) * 100;
+            distance = 50;
+        }
+        if (distance > 10) {
+            extraFare += Math.ceil((distance - 10) / 5.0) * 100;
+        }
+        return extraFare;
     }
 }

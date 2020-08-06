@@ -27,6 +27,8 @@ public class PathServiceTest {
         stations.put(2L, TestObjectUtils.createStation(2L, "강남역"));
         stations.put(3L, TestObjectUtils.createStation(3L, "양재역"));
         stations.put(4L, TestObjectUtils.createStation(4L, "남부터미널역"));
+        stations.put(5L, TestObjectUtils.createStation(5L, "매봉역"));
+        stations.put(6L, TestObjectUtils.createStation(6L, "도곡역"));
 
         Line line1 = TestObjectUtils.createLine(1L, "2호선", "GREEN", 200);
         line1.addLineStation(new LineStation(1L, null, 0, 0));
@@ -40,6 +42,8 @@ public class PathServiceTest {
         line3.addLineStation(new LineStation(1L, null, 0, 0));
         line3.addLineStation(new LineStation(4L, 1L, 1, 2));
         line3.addLineStation(new LineStation(3L, 4L, 2, 2));
+        line3.addLineStation(new LineStation(5L, 3L, 20, 2));
+        line3.addLineStation(new LineStation(6L, 5L, 50, 2));
 
         lines = Lists.newArrayList(line1, line2, line3);
 
@@ -86,5 +90,25 @@ public class PathServiceTest {
 
         // then
         assertThat(subwayPath.calculateFare()).isEqualTo(1450);
+    }
+
+    @Test
+    void calculateFare_overDistance_under50km() {
+        // when
+        SubwayPath subwayPath = pathService.findPath(lines, 3L, 5L, PathType.DURATION);
+
+        // then
+        assertThat(subwayPath.calculateDistance()).isEqualTo(20);
+        assertThat(subwayPath.calculateFare()).isEqualTo(1450);
+    }
+
+    @Test
+    void calculateFare_overDistance_over50km() {
+        // when
+        SubwayPath subwayPath = pathService.findPath(lines, 3L, 6L, PathType.DURATION);
+
+        // then
+        assertThat(subwayPath.calculateDistance()).isEqualTo(70);
+        assertThat(subwayPath.calculateFare()).isEqualTo(2350);
     }
 }
