@@ -8,14 +8,14 @@
         - [ ] 연령별 할인 정책 적용
 - [ ] 프론트엔드
     - [x] api 연동
-    - [ ] path와 departureTime form의 validation을 구현
-        - [ ] 빈 값 확인
+    - [x] path와 departureTime form의 validation을 구현
+        - [x] 빈 값 확인
         - path form
             - [x] source, target 유효값 검사
         - departureTime form
-            - [ ] dayTime: '오전' or '오후'인지 검사
-            - [ ] hour: 숫자 타입, 1~12 사이의 정수인지 검사
-            - [ ] minute: 숫자 타입, 0~60 사이의 정수인지 검사
+            - [x] dayTime: '오전' or '오후'인지 검사
+            - [x] hour: 숫자 타입, 1~12 사이의 정수인지 검사
+            - [x] minute: 숫자 타입, 0~60 사이의 정수인지 검사
     - [ ] 현재 시간 출력
         - [ ] 현재 시간 가져오기
     - [ ] 검색 결과 출력
