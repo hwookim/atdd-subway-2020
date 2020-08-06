@@ -8,6 +8,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.web.context.WebApplicationContext;
+import wooteco.security.core.TokenResponse;
 import wooteco.subway.common.documentation.Documentation;
 import wooteco.subway.maps.map.application.MapService;
 import wooteco.subway.maps.map.dto.PathResponse;
@@ -33,9 +34,12 @@ public class PathDocumentation extends Documentation {
     @MockBean
     private MapService mapService;
 
+    protected TokenResponse tokenResponse;
+
     @BeforeEach
     public void setUp(WebApplicationContext context, RestDocumentationContextProvider restDocumentation) {
         super.setUp(context, restDocumentation);
+        tokenResponse = new TokenResponse("token");
     }
 
     @Test
@@ -69,4 +73,35 @@ public class PathDocumentation extends Documentation {
                 extract();
     }
 
+    @Test
+    void findPath_withMember() {
+        PathResponse pathResponse = new PathResponse(
+                Arrays.asList(
+                        new StationResponse(1L, "교대역", LocalDateTime.now(), LocalDateTime.now()),
+                        new StationResponse(1L, "교대역", LocalDateTime.now(), LocalDateTime.now())
+                ), 10, 10, 1250);
+        when(mapService.findPath(any(), any(), any(), any())).thenReturn(pathResponse);
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("source", 1L);
+        params.put("target", 2L);
+        params.put("type", "DISTANCE");
+
+        given().log().all().
+                header("Authorization", "Bearer " + tokenResponse.getAccessToken()).
+                contentType(MediaType.APPLICATION_JSON_VALUE).
+                params(params).
+                when().
+                get("/paths").
+                then().
+                log().all().
+                apply(document("paths/find-witch-member",
+                        getDocumentRequest(),
+                        getDocumentResponse(),
+                        requestParameters(
+                                parameterWithName("source").description("출발역 아이디"),
+                                parameterWithName("target").description("도착역 아이디"),
+                                parameterWithName("type").description("경로 종류")))).
+                extract();
+    }
 }

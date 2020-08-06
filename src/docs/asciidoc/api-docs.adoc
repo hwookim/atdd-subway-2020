@@ -38,3 +38,9 @@ operation::favorites/delete[snippets='http-request,http-response,request-headers
 === 경로 검색
 
 operation::paths/find[snippets='http-request,request-parameters,http-response']
+
+[[resources-paths-find-with-member]]
+=== 회원의 경로 검색
+
+operation::paths/find-witch-member[snippets='http-request,request-parameters,http-response']
+
