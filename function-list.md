@@ -7,7 +7,7 @@
             - [x] 추가 요금 중 가장 높은 요금만 적용
         - [ ] 연령별 할인 정책 적용
 - [ ] 프론트엔드
-    - [ ] api 연동
+    - [x] api 연동
     - [ ] path와 departureTime form의 validation을 구현
         - [ ] 빈 값 확인
         - path form
